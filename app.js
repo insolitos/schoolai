@@ -1,6 +1,6 @@
 // app.js
 document.addEventListener('DOMContentLoaded', function () {
-  // Exemplo: Quiz simples no slide da enquete
+  // Quiz simples no slide da enquete
   const quizBtn = document.getElementById('quiz-btn');
   if (quizBtn) {
     quizBtn.addEventListener('click', function () {
