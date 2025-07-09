@@ -45,8 +45,13 @@
                     <span id="trainerModeText">Ativar Modo Formador</span>
                 </button>
                 <button class="btn btn--sm" id="downloadPDF">Descarregar PDF</button>
+                <button class="btn btn--sm" id="fullscreenToggle">Ecrã Completo</button>
+                <button class="btn btn--sm" id="showShortcuts">Atalhos</button>
                 <div class="slide-counter">
                     <span id="currentSlide">1</span> / <span id="totalSlides">15</span>
+                </div>
+                <div class="presentation-timer">
+                    Tempo: <span id="timer">0:00</span>
                 </div>
             </div>
 
@@ -581,6 +586,17 @@
                 <button class="btn btn--outline nav-btn" id="nextBtn">Seguinte →</button>
             </div>
         </main>
+    </div>
+
+    <!-- Custom Modal for Alerts/Confirmations -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <div class="modal-buttons">
+                <button class="btn btn--primary" id="modalConfirmBtn">OK</button>
+                <button class="btn btn--secondary" id="modalCancelBtn">Cancelar</button>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
