@@ -48,10 +48,20 @@ class PresentationApp {
         document.getElementById('downloadPDF').addEventListener('click', () => this.downloadPDF());
 
         // Alternar ecrã completo
-        document.getElementById('fullscreenToggle').addEventListener('click', () => this.toggleFullscreen());
+        const fullscreenToggleBtn = document.getElementById('fullscreenToggle');
+        if (fullscreenToggleBtn) { // Verificar se o botão existe
+            fullscreenToggleBtn.addEventListener('click', () => this.toggleFullscreen());
+        } else {
+            console.warn('Botão de ecrã completo (fullscreenToggle) não encontrado.');
+        }
 
         // Mostrar atalhos de teclado
-        document.getElementById('showShortcuts').addEventListener('click', () => this.showKeyboardShortcuts());
+        const showShortcutsBtn = document.getElementById('showShortcuts');
+        if (showShortcutsBtn) { // Verificar se o botão existe
+            showShortcutsBtn.addEventListener('click', () => this.showKeyboardShortcuts());
+        } else {
+            console.warn('Botão de atalhos (showShortcuts) não encontrado.');
+        }
         
         // Manipulador de redimensionamento da janela
         window.addEventListener('resize', () => this.handleResponsive());
@@ -110,76 +120,96 @@ class PresentationApp {
     }
 
     goToSlide(slideNumber, direction = 'none') {
-        if (slideNumber < 1 || slideNumber > this.totalSlides || slideNumber === this.currentSlide) return;
+        console.log(`Attempting to go to slide: ${slideNumber}, direction: ${direction}`);
+        if (slideNumber < 1 || slideNumber > this.totalSlides || slideNumber === this.currentSlide) {
+            console.log('Invalid slide number or already on current slide. Aborting.');
+            return;
+        }
 
         const currentSlideElement = document.querySelector('.slide.active');
         const newSlideElement = document.querySelector(`[data-slide="${slideNumber}"]`);
 
-        if (newSlideElement) {
-            // Passo 1: Animar o slide atual para fora (se existir)
-            if (currentSlideElement) {
-                // Remover a classe 'active' para que as transições CSS do estado normal sejam aplicadas
-                currentSlideElement.classList.remove('active');
+        if (!newSlideElement) {
+            console.error(`New slide element with data-slide="${slideNumber}" not found!`);
+            return;
+        }
 
-                // Definir a posição final e opacidade para o slide que sai
-                if (direction === 'next') {
-                    currentSlideElement.style.transform = 'translateX(-100%)'; // Move para a esquerda
-                } else if (direction === 'prev') {
-                    currentSlideElement.style.transform = 'translateX(100%)'; // Move para a direita
-                }
-                currentSlideElement.style.opacity = '0'; // Desaparece
+        console.log(`Current slide element:`, currentSlideElement);
+        console.log(`New slide element:`, newSlideElement);
 
-                // Ocultar o slide atual completamente após a sua transição
-                const hideCurrent = () => {
-                    currentSlideElement.style.display = 'none';
-                    // Resetar a transformação para a posição padrão (fora do ecrã à direita) para uso futuro
-                    currentSlideElement.style.transform = 'translateX(100%)'; 
-                    currentSlideElement.removeEventListener('transitionend', hideCurrent);
-                };
+        // Passo 1: Animar o slide atual para fora (se existir)
+        if (currentSlideElement) {
+            console.log('Animating current slide out...');
+            currentSlideElement.classList.remove('active'); // Remove active class to trigger transition
+            currentSlideElement.style.pointerEvents = 'none'; // Disable interactions
 
-                // Adicionar o listener para 'transitionend' apenas se houver uma transição esperada
-                if (direction !== 'none') {
-                    currentSlideElement.addEventListener('transitionend', hideCurrent, { once: true });
-                } else {
-                    // Se não houver transição (ex: salto direto), ocultar imediatamente
-                    hideCurrent();
-                }
-            }
-
-            // Passo 2: Preparar o novo slide para a entrada
-            newSlideElement.style.display = 'flex'; // Torná-lo visível (mas ainda fora do ecrã)
-            newSlideElement.style.opacity = '0'; // Começar transparente
-
-            // Definir a posição inicial fora do ecrã para o slide que entra
+            // Set the final position and opacity for the outgoing slide
             if (direction === 'next') {
-                newSlideElement.style.transform = 'translateX(100%)'; // Vem da direita
+                currentSlideElement.style.transform = 'translateX(-100%)'; // Move left
             } else if (direction === 'prev') {
-                newSlideElement.style.transform = 'translateX(-100%)'; // Vem da esquerda
-            } else {
-                newSlideElement.style.transform = 'translateX(0)'; // Sem direção específica, apenas aparece
+                currentSlideElement.style.transform = 'translateX(100%)'; // Move right
             }
+            currentSlideElement.style.opacity = '0'; // Fade out
 
-            // Forçar um reflow: Isto é CRUCIAL. Garante que o navegador renderiza o estado inicial
-            // (display:flex, opacity:0, transform:X%) ANTES de aplicar a classe 'active'.
-            void newSlideElement.offsetWidth; 
+            const hideCurrent = () => {
+                console.log('Transition ended for current slide. Hiding...');
+                currentSlideElement.style.display = 'none'; // Hide from layout
+                currentSlideElement.style.visibility = 'hidden'; // Make invisible
+                // Reset transform for future use (off-screen right, default for new slides)
+                currentSlideElement.style.transform = 'translateX(100%)'; 
+                currentSlideElement.removeEventListener('transitionend', hideCurrent);
+            };
 
-            // Passo 3: Animar o novo slide para dentro
-            // Aplicar os estilos finais que irão acionar a transição CSS
-            newSlideElement.style.opacity = '1';
-            newSlideElement.style.transform = 'translateX(0)'; // Move para o centro
-            newSlideElement.classList.add('active'); // Adicionar a classe 'active' para que permaneça ativo
+            // Attach transitionend listener. Use a fallback setTimeout in case transitionend doesn't fire
+            let transitionTimeout = setTimeout(hideCurrent, 300); // Max duration of transition + buffer
+            currentSlideElement.addEventListener('transitionend', function handler() {
+                clearTimeout(transitionTimeout); // Clear the fallback timeout
+                hideCurrent();
+                currentSlideElement.removeEventListener('transitionend', handler);
+            }, { once: true }); // Ensure listener is removed after one execution
 
-            // Atualizar o estado interno e os elementos da UI
-            this.currentSlide = slideNumber;
-            this.updateSlideCounter();
-            this.updateNavButtons();
-            this.updateSidebarActive();
-            this.updateHash(); // Atualizar o hash da URL
+        }
 
-            // Fechar a barra lateral móvel após a navegação
-            if (window.innerWidth <= 768) {
-                this.closeMobileSidebar();
-            }
+        // Passo 2: Preparar o novo slide para a entrada
+        console.log('Preparing new slide for entry...');
+        newSlideElement.style.display = 'flex'; // Make it part of the layout
+        newSlideElement.style.visibility = 'visible'; // Make it visible
+        newSlideElement.style.pointerEvents = 'auto'; // Enable interaction
+        newSlideElement.style.opacity = '0'; // Start transparent
+
+        // Set initial off-screen position for the incoming slide
+        if (direction === 'next') {
+            newSlideElement.style.transform = 'translateX(100%)'; // Comes from right
+        } else if (direction === 'prev') {
+            newSlideElement.style.transform = 'translateX(-100%)'; // Comes from left
+        } else {
+            // If no specific direction (e.g., direct jump via sidebar), just appear without horizontal slide
+            newSlideElement.style.transform = 'translateX(0)'; 
+        }
+
+        // Force a reflow: CRUCIAL. Ensures browser renders initial state
+        // (display:flex, visibility:visible, opacity:0, transform:X%) BEFORE applying final state.
+        // Without this, the transition may not occur as the browser might optimize away the intermediate state.
+        void newSlideElement.offsetWidth; 
+        console.log('Reflow forced for new slide.');
+
+        // Passo 3: Animar o novo slide para dentro
+        console.log('Animating new slide in...');
+        newSlideElement.style.opacity = '1';
+        newSlideElement.style.transform = 'translateX(0)'; // Move to center
+        newSlideElement.classList.add('active'); // Add active class to keep it active
+
+        // Update internal state and UI elements
+        this.currentSlide = slideNumber;
+        this.updateSlideCounter();
+        this.updateNavButtons();
+        this.updateSidebarActive();
+        this.updateHash(); // Update URL hash
+        console.log(`Successfully moved to slide ${this.currentSlide}`);
+
+        // Close mobile sidebar after navigation
+        if (window.innerWidth <= 768) {
+            this.closeMobileSidebar();
         }
     }
 
@@ -257,42 +287,61 @@ class PresentationApp {
 
     downloadPDF() {
         this.showCustomModal('Pretende descarregar a apresentação em PDF? Esta funcionalidade irá abrir o diálogo de impressão do navegador.', true, () => {
-            // Temporariamente mostrar todos os slides e notas do formador para impressão
+            console.log('Initiating PDF download process...');
             const originalTrainerMode = this.trainerMode;
             
-            // Ativar modo formador para PDF completo
+            // Enable trainer mode for complete PDF
             if (!this.trainerMode) {
                 this.toggleTrainerMode();
             }
             
-            // Mostrar todos os slides
+            // Show all slides for printing
             const slides = document.querySelectorAll('.slide');
             slides.forEach(slide => {
-                slide.style.display = 'flex';
-                slide.style.opacity = '1';
-                slide.style.transform = 'none';
-                slide.style.position = 'static';
+                slide.style.display = 'flex'; // Ensure it's in layout
+                slide.style.opacity = '1'; // Fully visible
+                slide.style.transform = 'none'; // No translation
+                slide.style.position = 'static'; // Allow normal flow
+                slide.style.visibility = 'visible'; // Ensure visibility
+                slide.style.pointerEvents = 'auto'; // Enable interaction
+                slide.classList.remove('active', 'prev', 'next'); // Remove active/transition classes
             });
             
-            // Acionar impressão
+            // Trigger print
             window.print();
-            
-            // Restaurar o estado original após o diálogo de impressão
+            console.log('Print dialog triggered.');
+
+            // Restore original state after print dialog
+            // Use a timeout to ensure print dialog is closed and styles are reset gracefully
             setTimeout(() => {
+                console.log('Restoring slide states after PDF download...');
                 slides.forEach((slide, index) => {
                     if (index + 1 !== this.currentSlide) {
+                        // For inactive slides, hide them
                         slide.style.display = 'none';
                         slide.style.opacity = '0';
-                        slide.style.transform = 'translateX(100%)';
-                        slide.style.position = 'absolute';
+                        slide.style.transform = 'translateX(100%)'; // Reset off-screen
+                        slide.style.position = 'absolute'; // Back to absolute positioning
+                        slide.style.visibility = 'hidden';
+                        slide.style.pointerEvents = 'none';
+                    } else {
+                        // For the current slide, ensure it's active and correctly positioned
+                        slide.classList.add('active');
+                        slide.style.display = 'flex';
+                        slide.style.opacity = '1';
+                        slide.style.transform = 'translateX(0)';
+                        slide.style.position = 'absolute'; // Keep absolute positioning
+                        slide.style.visibility = 'visible';
+                        slide.style.pointerEvents = 'auto';
                     }
                 });
                 
-                // Restaurar modo formador
+                // Restore trainer mode
                 if (!originalTrainerMode && this.trainerMode) {
                     this.toggleTrainerMode();
                 }
-            }, 1000);
+                console.log('Slide states restored.');
+            }, 1000); // Give enough time for print dialog to appear/disappear
         });
     }
 
