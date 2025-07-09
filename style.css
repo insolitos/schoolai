@@ -813,7 +813,7 @@ select.form-control {
   transition: opacity var(--duration-normal) var(--ease-standard), 
               transform var(--duration-normal) var(--ease-standard); /* Explicit transitions */
   pointer-events: none; /* Disable interaction when hidden */
-  display: none; /* Keep it out of layout when hidden */
+  display: flex; /* Always flex, manage visibility with opacity/visibility */
 }
 
 .slide.active {
@@ -821,17 +821,21 @@ select.form-control {
   opacity: 1;
   transform: translateX(0); /* Move to center */
   pointer-events: auto; /* Enable interaction when active */
-  display: flex; /* Make it part of the layout when active */
 }
 
 /* Transições de slide */
 /* Estas classes são usadas para definir a posição de partida/chegada durante a transição */
+/* No JS, manipulamos o transform diretamente antes de adicionar a classe active */
 .slide.prev {
-  transform: translateX(-100%); /* Move to left (for outgoing slide or incoming from left) */
+  /* This class is now primarily for initial positioning of incoming slides from left */
+  /* and the final position of outgoing slides to left */
+  transform: translateX(-100%); 
 }
 
 .slide.next {
-  transform: translateX(100%); /* Move to right (for outgoing slide or incoming from right) */
+  /* This class is now primarily for initial positioning of incoming slides from right */
+  /* and the final position of outgoing slides to right */
+  transform: translateX(100%);
 }
 
 
