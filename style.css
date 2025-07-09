@@ -807,17 +807,21 @@ select.form-control {
   width: 100%;
   height: 100%;
   padding: var(--space-32);
-  display: none; /* Starts hidden */
+  visibility: hidden; /* Start hidden */
   opacity: 0;
   transform: translateX(100%); /* Default off-screen position */
   transition: opacity var(--duration-normal) var(--ease-standard), 
               transform var(--duration-normal) var(--ease-standard); /* Explicit transitions */
+  pointer-events: none; /* Disable interaction when hidden */
+  display: none; /* Keep it out of layout when hidden */
 }
 
 .slide.active {
-  display: flex; /* Make it visible */
+  visibility: visible; /* Make it visible */
   opacity: 1;
   transform: translateX(0); /* Move to center */
+  pointer-events: auto; /* Enable interaction when active */
+  display: flex; /* Make it part of the layout when active */
 }
 
 /* Transições de slide */
