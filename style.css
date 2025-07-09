@@ -1,4 +1,3 @@
-
 :root {
   /* Colors */
   --color-background: rgba(252, 252, 249, 1);
@@ -228,6 +227,11 @@ html {
 body {
   margin: 0;
   padding: 0;
+}
+
+/* Adicionar para evitar scroll quando a sidebar está aberta no móvel */
+body.no-scroll {
+    overflow: hidden;
 }
 
 *,
@@ -769,16 +773,19 @@ select.form-control {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-base);
+  flex-wrap: wrap; /* Permitir que os itens quebrem para a próxima linha */
+  gap: var(--space-8); /* Espaçamento entre os itens */
 }
 
 .controls .btn {
-  margin-right: var(--space-8);
+  margin-right: 0; /* Remover margin-right para melhor espaçamento com gap */
 }
 
-.slide-counter {
+.slide-counter, .presentation-timer {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   font-weight: var(--font-weight-medium);
+  white-space: nowrap; /* Evitar quebra de linha */
 }
 
 /* Slides Container */
@@ -800,26 +807,29 @@ select.form-control {
   width: 100%;
   height: 100%;
   padding: var(--space-32);
-  display: none;
-  flex-direction: column;
+  display: none; /* Starts hidden */
   opacity: 0;
-  transform: translateX(100%);
-  transition: all var(--duration-normal) var(--ease-standard);
+  transform: translateX(100%); /* Default off-screen position */
+  transition: opacity var(--duration-normal) var(--ease-standard), 
+              transform var(--duration-normal) var(--ease-standard); /* Explicit transitions */
 }
 
 .slide.active {
-  display: flex;
+  display: flex; /* Make it visible */
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0); /* Move to center */
 }
 
+/* Transições de slide */
+/* Estas classes são usadas para definir a posição de partida/chegada durante a transição */
 .slide.prev {
-  transform: translateX(-100%);
+  transform: translateX(-100%); /* Move to left (for outgoing slide or incoming from left) */
 }
 
 .slide.next {
-  transform: translateX(100%);
+  transform: translateX(100%); /* Move to right (for outgoing slide or incoming from right) */
 }
+
 
 .slide-content {
   flex: 1;
@@ -1397,6 +1407,46 @@ select.form-control {
   cursor: not-allowed;
 }
 
+/* Custom Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.modal-content {
+    background-color: var(--color-surface);
+    margin: auto;
+    padding: var(--space-24);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    width: 80%; /* Could be responsive */
+    max-width: 500px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+}
+
+.modal-content p {
+    margin-bottom: var(--space-24);
+    font-size: var(--font-size-lg);
+    color: var(--color-text);
+    white-space: pre-wrap; /* Preserve whitespace and allow wrapping */
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-16);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .sidebar {
@@ -1406,6 +1456,7 @@ select.form-control {
     height: 100vh;
     z-index: 100;
     transform: translateX(-100%);
+    box-shadow: var(--shadow-lg); /* Adicionar sombra para destacar a sobreposição */
   }
   
   .sidebar.open {
@@ -1413,7 +1464,7 @@ select.form-control {
   }
   
   .sidebar.collapsed {
-    transform: translateX(-100%);
+    transform: translateX(-100%); /* Garantir que está oculto quando recolhido no móvel */
   }
   
   .main-content {
