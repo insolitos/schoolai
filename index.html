@@ -1,632 +1,202 @@
+
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SchoolAI - Formação para Professores</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Chart.js CDN para renderização de gráficos -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="utf-8" />
+  <title>SchoolAI — Guia Interativo para Professores</title>
+
+  <!-- Reveal.js CDN (abre no browser localmente ou em servidor) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.2/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.2/dist/theme/black.css">
+  <style>
+    /* Ajustes de estilo pessoais */
+    h1, h2, h3 { font-family: "Helvetica Neue", Arial, sans-serif; }
+    .footer { position: absolute; bottom: 10px; left: 0; width: 100%; font-size: 0.5em; text-align: center; color: #aaa; }
+    .highlight { color: #ffd166; font-weight: 700; }
+    .columnas { display: flex; gap: 2rem; }
+    .columnas > div { flex: 1; }
+  </style>
 </head>
+
 <body>
-    <div class="presentation-container">
-        <!-- Sidebar Index -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h3>Índice</h3>
-                <button class="btn btn--sm sidebar-toggle" id="sidebarToggle">
-                    <span class="toggle-icon">←</span>
-                </button>
-            </div>
-            <nav class="sidebar-nav">
-                <ul class="sidebar-list">
-                    <li><a href="#slide-1" data-slide="1">1. Título</a></li>
-                    <li><a href="#slide-2" data-slide="2">2. Introdução ao SchoolAI</a></li>
-                    <li><a href="#slide-3" data-slide="3">3. Missão e Visão</a></li>
-                    <li><a href="#slide-4" data-slide="4">4. Dot - Assistente de IA</a></li>
-                    <li><a href="#slide-5" data-slide="5">5. Spaces - Biblioteca de Lições</a></li>
-                    <li><a href="#slide-6" data-slide="6">6. Ferramentas de Produtividade</a></li>
-                    <li><a href="#slide-7" data-slide="7">7. Monitorização em Tempo Real</a></li>
-                    <li><a href="#slide-8" data-slide="8">8. Extensão Chrome</a></li>
-                    <li><a href="#slide-9" data-slide="9">9. Personalização da Aprendizagem</a></li>
-                    <li><a href="#slide-10" data-slide="10">10. Segurança e Privacidade</a></li>
-                    <li><a href="#slide-11" data-slide="11">11. Controlo do Professor</a></li>
-                    <li><a href="#slide-12" data-slide="12">12. Casos de Uso Práticos</a></li>
-                    <li><a href="#slide-13" data-slide="13">13. Primeiros Passos</a></li>
-                    <li><a href="#slide-14" data-slide="14">14. Boas Práticas</a></li>
-                    <li><a href="#slide-15" data-slide="15">15. Futuro da IA na Educação</a></li>
-                    <li><a href="#slide-16" data-slide="16">16. Dados e Estatísticas</a></li> <!-- Novo slide para gráficos -->
-                </ul>
-            </nav>
-        </aside>
+<div class="reveal">
+<div class="slides">
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Controls -->
-            <div class="controls">
-                <button class="btn btn--sm" id="trainerMode">
-                    <span id="trainerModeText">Ativar Modo Formador</span>
-                </button>
-                <button class="btn btn--sm" id="downloadPDF">Descarregar PDF</button>
-                <button class="btn btn--sm" id="fullscreenToggle">Ecrã Completo</button>
-                <button class="btn btn--sm" id="showShortcuts">Atalhos</button>
-                <div class="slide-counter">
-                    <span id="currentSlide">1</span> / <span id="totalSlides">16</span> <!-- Total de slides atualizado -->
-                </div>
-                <div class="presentation-timer">
-                    Tempo: <span id="timer">0:00</span>
-                </div>
-            </div>
+<!-- Slide 1: Título -->
+<section>
+  <h1>SchoolAI</h1>
+  <h3 class="highlight">Transformar a experiência educativa com IA</h3>
+  <p class="footer">Formação para Professores · 4 h · 15 slides</p>
+</section>
 
-            <!-- Slides Container -->
-            <div class="slides-container">
-                <!-- Slide 1: Título -->
-                <div class="slide active" data-slide="1">
-                    <div class="slide-content">
-                        <h1 class="slide-title">SchoolAI: Potenciar Cada Aluno, Apoiar Cada Professor</h1>
-                        <p class="slide-subtitle">Formação para Professores - Plataforma de IA Educacional</p>
-                        <div class="slide-icon">🤖</div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Apresentação durará cerca de 60 minutos</li>
-                            <li>Foco na aplicação prática em sala de aula</li>
-                            <li>Encorajar perguntas durante a apresentação</li>
-                        </ul>
-                    </div>
-                </div>
+<!-- Slide 2: Objectivos da Sessão -->
+<section>
+  <h2>Objectivos da Formação</h2>
+  <ul>
+    <li>Compreender a <strong>visão e estrutura</strong> do SchoolAI</li>
+    <li>Explorar as <strong>funcionalidades-chave</strong></li>
+    <li>Criar o <strong>primeiro Espaço Estudantil</strong></li>
+    <li>Planear a <strong>implementação faseada</strong> na escola</li>
+  </ul>
+</section>
 
-                <!-- Slide 2: Introdução ao SchoolAI -->
-                <div class="slide" data-slide="2">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Introdução ao SchoolAI</h1>
-                        <div class="slide-body">
-                            <div class="feature-grid">
-                                <div class="feature-item">
-                                    <h3>Plataforma Confiável</h3>
-                                    <p>IA especificamente desenhada para educação</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h3>Mais de 1 milhão</h3>
-                                    <p>de salas de aula já utilizam</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h3>Gratuito</h3>
-                                    <p>para professores</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h3>60+ idiomas</h3>
-                                    <p>suportados globalmente</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Enfatizar a confiabilidade e segurança</li>
-                            <li>Mostrar que não é uma ferramenta experimental</li>
-                            <li>Destacar o suporte multilingue</li>
-                        </ul>
-                    </div>
-                </div>
+<!-- Slide 3: Enquete Inicial (exemplo de interactividade) -->
+<section data-auto-animate>
+  <h2>📊 Enquete Rápida</h2>
+  <p>Qual o maior desafio actual na sua sala de aula?</p>
+  <ol>
+    <li>Gestão de tempo</li>
+    <li>Diferenciação</li>
+    <li>Engajamento dos alunos</li>
+    <li>Avaliação e feedback</li>
+  </ol>
+  <p style="font-size:0.7em;">(Use Mentimeter, Slido, etc. para recolher respostas ao vivo)</p>
+</section>
 
-                <!-- Slide 3: Missão e Visão -->
-                <div class="slide" data-slide="3">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Missão e Visão</h1>
-                        <div class="slide-body">
-                            <div class="mission-vision">
-                                <div class="mission">
-                                    <h3>Missão</h3>
-                                    <p class="quote">"Potenciar cada aprendiz, apoiar cada educador"</p>
-                                </div>
-                                <div class="vision">
-                                    <h3>Visão</h3>
-                                    <p>IA flexível construída para salas de aula</p>
-                                </div>
-                                <div class="focus">
-                                    <h3>Foco</h3>
-                                    <p>Personalização da aprendizagem para cada estudante</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Sublinhar o foco no professor, não apenas no aluno</li>
-                            <li>Explicar como a IA complementa, não substitui</li>
-                            <li>Dar exemplos de personalização</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 4: Dot - Assistente de IA -->
-                <div class="slide" data-slide="4">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Dot - Assistente de IA</h1>
-                        <div class="slide-body">
-                            <div class="dot-features">
-                                <div class="dot-intro">
-                                    <h3>O que é o Dot?</h3>
-                                    <p>Assistente de IA pessoal para cada estudante</p>
-                                </div>
-                                <div class="dot-capabilities">
-                                    <h3>Capacidades:</h3>
-                                    <ul>
-                                        <li>Orienta através de espaços de trabalho interativos</li>
-                                        <li>Adapta-se ao estilo de aprendizagem individual</li>
-                                        <li>Garante compreensão antes de avançar</li>
-                                        <li>Fornece feedback personalizado</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Demonstrar interação com Dot se possível</li>
-                            <li>Explicar como diferencia do ChatGPT</li>
-                            <li>Mostrar exemplos de adaptação</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 5: Spaces - Biblioteca de Lições -->
-                <div class="slide" data-slide="5">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Spaces - Biblioteca de Lições</h1>
-                        <div class="slide-body">
-                            <div class="spaces-info">
-                                <div class="spaces-stats">
-                                    <h3>Mais de 200.000 Spaces</h3>
-                                    <p>criados por professores em todo o mundo</p>
-                                </div>
-                                <div class="spaces-features">
-                                    <h3>Características:</h3>
-                                    <ul>
-                                        <li>Lições interativas testadas em sala de aula</li>
-                                        <li>Adaptáveis ao contexto da sua escola</li>
-                                        <li>Partilha de recursos entre professores</li>
-                                        <li>Criação de novos spaces personalizados</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Mostrar exemplos de spaces por disciplina</li>
-                            <li>Explicar como adaptar spaces existentes</li>
-                            <li>Demonstrar criação de um space simples</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 6: Ferramentas de Produtividade -->
-                <div class="slide" data-slide="6">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Ferramentas de Produtividade</h1>
-                        <div class="slide-body">
-                            <div class="productivity-tools">
-                                <div class="tools-grid">
-                                    <div class="tool-item">
-                                        <h3>📝 Planos de Aula</h3>
-                                        <p>Criação em minutos, não horas</p>
-                                    </div>
-                                    <div class="tool-item">
-                                        <h3>📊 Rubricas</h3>
-                                        <p>Geração automática de critérios</p>
-                                    </div>
-                                    <div class="tool-item">
-                                        <h3>✅ Avaliações</h3>
-                                        <p>Testes personalizados por nível</p>
-                                    </div>
-                                    <div class="tool-item">
-                                        <h3>👨‍👩‍👧‍👦 Comunicação</h3>
-                                        <p>Relatórios para pais</p>
-                                    </div>
-                                </div>
-                                <div class="time-savings">
-                                    <h3>⏰ Poupança de Tempo</h3>
-                                    <p class="highlight">10+ horas por semana</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Enfatizar a poupança de tempo real</li>
-                            <li>Mostrar exemplos práticos de cada ferramenta</li>
-                            <li>Explicar como personalizar para o contexto local</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 7: Monitorização em Tempo Real -->
-                <div class="slide" data-slide="7">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Monitorização em Tempo Real</h1>
-                        <div class="slide-body">
-                            <div class="monitoring-features">
-                                <div class="monitoring-grid">
-                                    <div class="monitoring-item">
-                                        <h3>📈 Progresso Individual</h3>
-                                        <p>Visão do progresso de cada estudante</p>
-                                    </div>
-                                    <div class="monitoring-item">
-                                        <h3>🚨 Identificação Precoce</h3>
-                                        <p>Dificuldades detetadas antes do atraso</p>
-                                    </div>
-                                    <div class="monitoring-item">
-                                        <h3>⚡ Intervenção Oportuna</h3>
-                                        <p>Ajuda no momento certo</p>
-                                    </div>
-                                    <div class="monitoring-item">
-                                        <h3>💡 Dados Acionáveis</h3>
-                                        <p>Insights práticos, não apenas números</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Mostrar dashboard de monitorização</li>
-                            <li>Explicar como interpretar os dados</li>
-                            <li>Dar exemplos de intervenções baseadas em dados</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 8: Extensão Chrome -->
-                <div class="slide" data-slide="8">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Extensão Chrome</h1>
-                        <div class="slide-body">
-                            <div class="chrome-extension">
-                                <div class="extension-features">
-                                    <h3>Integração Perfeita</h3>
-                                    <ul>
-                                        <li>Integração direta com Google Docs</li>
-                                        <li>IA disponível em toda a internet</li>
-                                        <li>Criar, diferenciar e melhorar sem trocar de ecrã</li>
-                                        <li>Fluxo de trabalho otimizado</li>
-                                    </ul>
-                                </div>
-                                <div class="workflow-benefits">
-                                    <h3>Benefícios do Fluxo de Trabalho:</h3>
-                                    <p>Sem necessidade de alternar entre aplicações</p>
-                                    <p>Acesso instantâneo às funcionalidades de IA</p>
-                                    <p>Melhoria contínua dos documentos</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Demonstrar instalação da extensão</li>
-                            <li>Mostrar uso em Google Docs</li>
-                            <li>Explicar segurança da extensão</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 9: Personalização da Aprendizagem -->
-                <div class="slide" data-slide="9">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Personalização da Aprendizagem</h1>
-                        <div class="slide-body">
-                            <div class="personalization">
-                                <div class="personalization-aspects">
-                                    <div class="aspect">
-                                        <h3>🎯 Adaptação ao Ritmo</h3>
-                                        <p>Cada estudante avança no seu próprio ritmo</p>
-                                    </div>
-                                    <div class="aspect">
-                                        <h3>🎨 Estilos de Aprendizagem</h3>
-                                        <p>Visual, auditivo, cinestésico</p>
-                                    </div>
-                                    <div class="aspect">
-                                        <h3>🔧 Dificuldades Específicas</h3>
-                                        <p>Apoio para necessidades especiais</p>
-                                    </div>
-                                    <div class="aspect">
-                                        <h3>✨ Experiências Únicas</h3>
-                                        <p>Percursos de aprendizagem personalizados</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Dar exemplos concretos de personalização</li>
-                            <li>Explicar como funciona a adaptação automática</li>
-                            <li>Mostrar relatórios de progresso individual</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 10: Segurança e Privacidade -->
-                <div class="slide" data-slide="10">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Segurança e Privacidade</h1>
-                        <div class="slide-body">
-                            <div class="security-features">
-                                <div class="security-grid">
-                                    <div class="security-item">
-                                        <h3>🔒 Segurança desde o Início</h3>
-                                        <p>Concebido com segurança como prioridade</p>
-                                    </div>
-                                    <div class="security-item">
-                                        <h3>🚨 Alertas Imediatos</h3>
-                                        <p>Notificações para questões críticas</p>
-                                    </div>
-                                    <div class="security-item">
-                                        <h3>🛡️ Proteção de Dados</h3>
-                                        <p>Dados dos estudantes protegidos</p>
-                                    </div>
-                                    <div class="security-item">
-                                        <h3>📜 Acordos Diretos</h3>
-                                        <p>Contratos diretos com fornecedores de IA</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Explicar conformidade com GDPR</li>
-                            <li>Mostrar políticas de privacidade</li>
-                            <li>Discutir medidas de segurança técnica</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 11: Controlo do Professor -->
-                <div class="slide" data-slide="11">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Controlo do Professor</h1>
-                        <div class="slide-body">
-                            <div class="teacher-control">
-                                <div class="control-features">
-                                    <div class="control-item">
-                                        <h3>👨‍🏫 Professor Define as Regras</h3>
-                                        <p>Controlo total sobre funcionalidades</p>
-                                    </div>
-                                    <div class="control-item">
-                                        <h3>⚙️ Controlo Granular</h3>
-                                        <p>Definir o que os estudantes podem fazer</p>
-                                    </div>
-                                    <div class="control-item">
-                                        <h3>👀 Monitorização Constante</h3>
-                                        <p>Visão de todas as interações</p>
-                                    </div>
-                                    <div class="control-item">
-                                        <h3>🔍 Supervisão Ativa</h3>
-                                        <p>Acompanhamento em tempo real</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Mostrar painel de controlo do professor</li>
-                            <li>Explicar configurações de permissões</li>
-                            <li>Demonstrar monitorização de atividades</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 12: Casos de Uso Práticos -->
-                <div class="slide" data-slide="12">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Casos de Uso Práticos</h1>
-                        <div class="slide-body">
-                            <div class="use-cases">
-                                <div class="case-grid">
-                                    <div class="case-item">
-                                        <h3>👥 Instrução em Pequenos Grupos</h3>
-                                        <p>Atividades diferenciadas por grupo</p>
-                                    </div>
-                                    <div class="case-item">
-                                        <h3>📚 Diferenciação Curricular</h3>
-                                        <p>Adaptação de conteúdos por nível</p>
-                                    </div>
-                                    <div class="case-item">
-                                        <h3>📝 Avaliação Formativa</h3>
-                                        <p>Feedback contínuo durante a aprendizagem</p>
-                                    </div>
-                                    <div class="case-item">
-                                        <h3>💬 Feedback Personalizado</h3>
-                                        <p>Comentários específicos para cada aluno</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Dar exemplos práticos de cada caso</li>
-                            <li>Mostrar como implementar na sala de aula</li>
-                            <li>Discutir adaptações para diferentes disciplinas</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 13: Primeiros Passos -->
-                <div class="slide" data-slide="13">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Primeiros Passos</h1>
-                        <div class="slide-body">
-                            <div class="getting-started">
-                                <div class="steps">
-                                    <div class="step">
-                                        <h3>1️⃣ Registo Gratuito</h3>
-                                        <p>Aceda a <strong>schoolai.com</strong></p>
-                                    </div>
-                                    <div class="step">
-                                        <h3>2️⃣ Explorar Spaces</h3>
-                                        <p>Navegue pela biblioteca de lições</p>
-                                    </div>
-                                    <div class="step">
-                                        <h3>3️⃣ Criar o Primeiro Space</h3>
-                                        <p>Comece com um projeto simples</p>
-                                    </div>
-                                    <div class="step">
-                                        <h3>4️⃣ Convidar Estudantes</h3>
-                                        <p>Adicione a sua turma ao space</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Mostrar processo de registo passo a passo</li>
-                            <li>Demonstrar criação de space simples</li>
-                            <li>Explicar como gerir turmas</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 14: Boas Práticas -->
-                <div class="slide" data-slide="14">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Boas Práticas</h1>
-                        <div class="slide-body">
-                            <div class="best-practices">
-                                <div class="practice-grid">
-                                    <div class="practice-item">
-                                        <h3>🎯 Definir Objetivos Claros</h3>
-                                        <p>Estabeleça metas específicas para cada atividade</p>
-                                    </div>
-                                    <div class="practice-item">
-                                        <h3>📊 Monitorizar Regularmente</h3>
-                                        <p>Verifique o progresso dos estudantes</p>
-                                    </div>
-                                    <div class="practice-item">
-                                        <h3>🔄 Ajustar com Base no Feedback</h3>
-                                        <p>Adapte conforme os resultados</p>
-                                    </div>
-                                    <div class="practice-item">
-                                        <h3>🤝 Colaborar com Colegas</h3>
-                                        <p>Partilhe experiências e resources</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Dar exemplos de objetivos bem definidos</li>
-                            <li>Mostrar como interpretar relatórios</li>
-                            <li>Explicar comunidade de professores</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 15: Futuro da IA na Educação -->
-                <div class="slide" data-slide="15">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Futuro da IA na Educação</h1>
-                        <div class="slide-body">
-                            <div class="future-vision">
-                                <div class="future-grid">
-                                    <div class="future-item">
-                                        <h3>🚀 Tendências Emergentes</h3>
-                                        <p>Novas funcionalidades em desenvolvimento</p>
-                                    </div>
-                                    <div class="future-item">
-                                        <h3>🔄 Desenvolvimento Contínuo</h3>
-                                        <p>Atualizações regulares baseadas em feedback</p>
-                                    </div>
-                                    <div class="future-item">
-                                        <h3>👥 Comunidade Global</h3>
-                                        <p>Rede de professores partilhando recursos</p>
-                                    </div>
-                                    <div class="future-item">
-                                        <h3>📚 Recursos de Apoio</h3>
-                                        <p>Formação contínua e suporte técnico</p>
-                                    </div>
-                                </div>
-                                <div class="call-to-action">
-                                    <h3>Junte-se à Revolução Educacional!</h3>
-                                    <p>Visite <strong>schoolai.com</strong> e comece hoje</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Discutir roadmap futuro do SchoolAI</li>
-                            <li>Encorajar participação na comunidade</li>
-                            <li>Fornecer recursos de apoio contínuo</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Slide 16: Dados e Estatísticas (Novo Slide para Gráficos) -->
-                <div class="slide" data-slide="16">
-                    <div class="slide-content">
-                        <h1 class="slide-title">Dados e Estatísticas</h1>
-                        <div class="slide-body">
-                            <div class="chart-container">
-                                <h2>Erros Mais Comuns</h2>
-                                <canvas id="commonErrorsChart"></canvas>
-                            </div>
-                            <div class="chart-container mt-8">
-                                <h2>Uso de Sinais de Pontuação</h2>
-                                <canvas id="punctuationChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trainer-notes">
-                        <h4>Notas do Formador:</h4>
-                        <ul>
-                            <li>Analisar os dados de erros comuns e uso de pontuação.</li>
-                            <li>Discutir como estes dados podem informar a instrução.</li>
-                            <li>Enfatizar a importância da análise de dados para a personalização.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navigation -->
-            <div class="navigation">
-                <button class="btn btn--outline nav-btn" id="prevBtn">← Anterior</button>
-                <button class="btn btn--outline nav-btn" id="nextBtn">Seguinte →</button>
-            </div>
-        </main>
+<!-- Slide 4: O que é o SchoolAI -->
+<section>
+  <h2>O que é o <span class="highlight">SchoolAI</span>?</h2>
+  <p>Plataforma web inteligente que cria <em>experiências personalizadas</em>, oferece <em>insights em tempo real</em> e integra-se com o ecossistema escolar.</p>
+  <div class="columnas">
+    <div>
+      <h3>Para Professores</h3>
+      <ul><li>Planos de aula em segundos</li><li>Monitorização detalhada</li></ul>
     </div>
-
-    <!-- Custom Modal for Alerts/Confirmations -->
-    <div id="customModal" class="modal">
-        <div class="modal-content">
-            <p id="modalMessage"></p>
-            <div class="modal-buttons">
-                <button class="btn btn--primary" id="modalConfirmBtn">OK</button>
-                <button class="btn btn--secondary" id="modalCancelBtn">Cancelar</button>
-            </div>
-        </div>
+    <div>
+      <h3>Para Alunos</h3>
+      <ul><li>Tutoria 24/7</li><li>Aprendizagem imersiva</li></ul>
     </div>
+  </div>
+</section>
 
-    <script src="app.js"></script>
+<!-- Slide 5: Arquitectura Geral -->
+<section>
+  <h2>Arquitectura em 3 Camadas</h2>
+  <ol>
+    <li><strong>Espaços Estudantis</strong> (chatbots, jogos, debates)</li>
+    <li><strong>Mission Control</strong> (insights e alertas)</li>
+    <li><strong>Ferramentas de Criação</strong> (planos, actividades, extensão Chrome)</li>
+  </ol>
+</section>
+
+<!-- Slide 6: Demonstração ao Vivo -->
+<section>
+  <h2>🔴 Demonstração ao vivo</h2>
+  <p>Abrir <code>app.schoolai.com</code>, iniciar sessão e mostrar:</p>
+  <ul>
+    <li>Biblioteca “Discover”</li>
+    <li>Criar novo Espaço (tutor de português)</li>
+    <li>Visão do aluno e monitorização em tempo real</li>
+  </ul>
+</section>
+
+<!-- Slide 7: Benefícios para Professores -->
+<section>
+  <h2>Benefícios para Professores</h2>
+  <ul>
+    <li>Redução média de <strong>3&nbsp;h/semana</strong> em tarefas administrativas</li>
+    <li>Feedback instantâneo e relatórios automáticos</li>
+    <li>Diferenciação com poucos cliques</li>
+  </ul>
+</section>
+
+<!-- Slide 8: Benefícios para Alunos -->
+<section>
+  <h2>Benefícios para Alunos</h2>
+  <ul>
+    <li>Apoio personalizado 24/7</li>
+    <li>Gamificação e curiosidade</li>
+    <li>Ambiente seguro para perguntas</li>
+  </ul>
+</section>
+
+<!-- Slide 9: Laboratório Hands-On -->
+<section>
+  <h2>Laboratório: Criar um Espaço</h2>
+  <ol>
+    <li>Definir objectivo (ex.: revisão gramatical)</li>
+    <li>Escrever prompt claro</li>
+    <li>Testar como aluno</li>
+    <li>Partilhar link ou QR code</li>
+  </ol>
+  <p class="footer">Tempo estimado: 25 min</p>
+</section>
+
+<!-- Slide 10: Casos de Sucesso -->
+<section>
+  <h2>Casos de Uso Reais</h2>
+  <ul>
+    <li><strong>IA Educação 360º</strong> (Elvas &amp; Oeiras) – Melhoria na escrita</li>
+    <li><strong>Toler Elementary (EUA)</strong> – Apoio a alunos com necessidades</li>
+    <li><strong>Video Explorer</strong> – Integração YouTube + IA</li>
+  </ul>
+</section>
+
+<!-- Slide 11: Segurança & Privacidade -->
+<section>
+  <h2>Segurança e Conformidade</h2>
+  <ul>
+    <li>Compatível com GDPR, FERPA, COPPA</li>
+    <li>Dados não são usados para treinar modelos</li>
+    <li>Máscara e anonimização de dados de alunos</li>
+  </ul>
+</section>
+
+<!-- Slide 12: Planos e Preços -->
+<section>
+  <h2>Planos Disponíveis</h2>
+  <table>
+    <tr><th>Plano</th><th>Destaques</th><th>Preço</th></tr>
+    <tr><td>Gratuito</td><td>75 sessões/dia, ferramentas base</td><td>0 €</td></tr>
+    <tr><td>Equipa</td><td>10 licenças, 175 alunos</td><td>≈ 1 270 US$/ano</td></tr>
+    <tr><td>Empresarial</td><td>Ilimitado, SSO, suporte dedicado</td><td>sob consulta</td></tr>
+  </table>
+</section>
+
+<!-- Slide 13: Melhores Práticas -->
+<section>
+  <h2>Boas Práticas</h2>
+  <ul>
+    <li>Prompts específicos e objectivos claros</li>
+    <li>Monitorizar Mission Control semanalmente</li>
+    <li>Avaliar resultados e ajustar Espaços</li>
+  </ul>
+</section>
+
+<!-- Slide 14: Implementação Faseada -->
+<section>
+  <h2>Roadmap de Implementação</h2>
+  <ol>
+    <li><strong>Fase 1</strong> – Exploração individual</li>
+    <li><strong>Fase 2</strong> – Piloto com uma turma</li>
+    <li><strong>Fase 3</strong> – Expansão para outras disciplinas</li>
+    <li><strong>Fase 4</strong> – Integração curricular completa</li>
+  </ol>
+</section>
+
+<!-- Slide 15: Encerramento e Próximos Passos -->
+<section>
+  <h2>Próximos Passos</h2>
+  <ul>
+    <li>Registe-se em <strong>schoolai.com</strong></li>
+    <li>Explore a biblioteca “Discover”</li>
+    <li>Participe na comunidade de educadores</li>
+    <li>Agende sessão de apoio personalizada</li>
+  </ul>
+  <p class="highlight">🌟 Obrigado e boas aulas!</p>
+</section>
+
+</div>
+</div>
+
+<!-- Scripts Reveal.js -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.2/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+  });
+</script>
 </body>
 </html>
