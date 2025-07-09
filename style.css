@@ -1,5 +1,3 @@
-
-<style>
 body {
   background: #1a1a2e;
   color: #fff;
@@ -47,4 +45,17 @@ th {
   background: #22223b;
   color: #ffd166;
 }
-</style>
+button#quiz-btn {
+  background: #ffd166;
+  color: #22223b;
+  border: none;
+  padding: 0.7em 1.2em;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 1em;
+}
+button#quiz-btn:hover {
+  background: #06d6a0;
+  color: #fff;
+}
