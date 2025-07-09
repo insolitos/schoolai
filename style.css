@@ -1,1 +1,50 @@
 
+<style>
+body {
+  background: #1a1a2e;
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+h1, h2, h3 {
+  color: #ffd166;
+  margin-bottom: 0.5em;
+}
+ul, ol {
+  font-size: 1.1em;
+}
+section {
+  padding: 2em 3em;
+  border-radius: 16px;
+  background: rgba(30, 30, 50, 0.85);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+}
+.highlight {
+  color: #06d6a0;
+  font-weight: bold;
+}
+.footer {
+  font-size: 0.7em;
+  color: #aaa;
+}
+.columnas {
+  display: flex;
+  gap: 2rem;
+}
+.columnas > div {
+  flex: 1;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+th, td {
+  border: 1px solid #444;
+  padding: 0.6em 1em;
+  text-align: left;
+}
+th {
+  background: #22223b;
+  color: #ffd166;
+}
+</style>
