@@ -219,7 +219,14 @@ class PresentationApp {
                 if (!originalTrainerMode && this.trainerMode) {
                     this.toggleTrainerMode();
                 }
+
+                // Ensure the correct slide is displayed
+                this.goToSlide(this.currentSlide);
+
             }, 1000);
+        } else {
+            // If user cancels, still ensure the correct slide is displayed
+            this.goToSlide(this.currentSlide);
         }
     }
 
