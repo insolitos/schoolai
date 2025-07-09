@@ -2,7 +2,7 @@
 class PresentationApp {
     constructor() {
         this.currentSlide = 1;
-        this.totalSlides = 15; // Certifique-se de que este número corresponde ao total de slides no HTML
+        this.totalSlides = 16; // Atualizado para incluir o novo slide de gráficos
         this.trainerMode = false;
         this.sidebarCollapsed = false;
         this.timerInterval = null;
@@ -19,6 +19,7 @@ class PresentationApp {
         this.handleResponsive();
         this.handleHashNavigation(); // Lidar com a navegação por hash na inicialização
         this.startTimer(); // Iniciar o temporizador da apresentação
+        this.loadAndRenderCharts(); // Carregar e renderizar gráficos na inicialização
     }
 
     bindEvents() {
@@ -120,9 +121,9 @@ class PresentationApp {
     }
 
     goToSlide(slideNumber, direction = 'none') {
-        console.log(`Attempting to go to slide: ${slideNumber}, direction: ${direction}`);
+        console.log(`[goToSlide] Attempting to go to slide: ${slideNumber}, direction: ${direction}`);
         if (slideNumber < 1 || slideNumber > this.totalSlides || slideNumber === this.currentSlide) {
-            console.log('Invalid slide number or already on current slide. Aborting.');
+            console.log('[goToSlide] Invalid slide number or already on current slide. Aborting.');
             return;
         }
 
@@ -130,84 +131,86 @@ class PresentationApp {
         const newSlideElement = document.querySelector(`[data-slide="${slideNumber}"]`);
 
         if (!newSlideElement) {
-            console.error(`New slide element with data-slide="${slideNumber}" not found!`);
+            console.error(`[goToSlide] New slide element with data-slide="${slideNumber}" not found!`);
             return;
         }
 
-        console.log(`Current slide element:`, currentSlideElement);
-        console.log(`New slide element:`, newSlideElement);
+        console.log(`[goToSlide] Current slide element:`, currentSlideElement);
+        console.log(`[goToSlide] New slide element:`, newSlideElement);
 
         // Passo 1: Animar o slide atual para fora (se existir)
         if (currentSlideElement) {
-            console.log('Animating current slide out...');
-            currentSlideElement.classList.remove('active'); // Remove active class to trigger transition
-            currentSlideElement.style.pointerEvents = 'none'; // Disable interactions
+            console.log('[goToSlide] Animating current slide out...');
+            currentSlideElement.classList.remove('active'); // Remover a classe 'active' para que as transições CSS do estado normal sejam aplicadas
+            currentSlideElement.style.pointerEvents = 'none'; // Desativar eventos de clique no slide que sai
 
-            // Set the final position and opacity for the outgoing slide
+            // Definir a posição final e opacidade para o slide que sai
             if (direction === 'next') {
-                currentSlideElement.style.transform = 'translateX(-100%)'; // Move left
+                currentSlideElement.style.transform = 'translateX(-100%)'; // Move para a esquerda
             } else if (direction === 'prev') {
-                currentSlideElement.style.transform = 'translateX(100%)'; // Move right
+                currentSlideElement.style.transform = 'translateX(100%)'; // Move para a direita
             }
-            currentSlideElement.style.opacity = '0'; // Fade out
+            currentSlideElement.style.opacity = '0'; // Desaparece
 
+            // Ocultar o slide atual completamente após a sua transição
             const hideCurrent = () => {
-                console.log('Transition ended for current slide. Hiding...');
-                currentSlideElement.style.display = 'none'; // Hide from layout
-                currentSlideElement.style.visibility = 'hidden'; // Make invisible
-                // Reset transform for future use (off-screen right, default for new slides)
+                console.log('[goToSlide] Transition ended for current slide. Hiding...');
+                currentSlideElement.style.visibility = 'hidden'; // Ocultar completamente
+                currentSlideElement.style.display = 'none'; // Ocultar do layout
+                // Resetar a transformação para a posição padrão (fora do ecrã à direita) para uso futuro
                 currentSlideElement.style.transform = 'translateX(100%)'; 
                 currentSlideElement.removeEventListener('transitionend', hideCurrent);
             };
 
-            // Attach transitionend listener. Use a fallback setTimeout in case transitionend doesn't fire
-            let transitionTimeout = setTimeout(hideCurrent, 300); // Max duration of transition + buffer
+            // Adicionar o listener para 'transitionend' apenas se houver uma transição esperada
+            // Usar um pequeno timeout como fallback caso a transição não seja detetada (ex: por display:none)
+            let transitionTimeout = setTimeout(hideCurrent, 300); // Duração máxima da transição + buffer
             currentSlideElement.addEventListener('transitionend', function handler() {
-                clearTimeout(transitionTimeout); // Clear the fallback timeout
+                clearTimeout(transitionTimeout); // Limpar o timeout de fallback
                 hideCurrent();
                 currentSlideElement.removeEventListener('transitionend', handler);
-            }, { once: true }); // Ensure listener is removed after one execution
-
+            }, { once: true }); // Garantir que o listener é removido após uma execução
         }
 
         // Passo 2: Preparar o novo slide para a entrada
-        console.log('Preparing new slide for entry...');
-        newSlideElement.style.display = 'flex'; // Make it part of the layout
-        newSlideElement.style.visibility = 'visible'; // Make it visible
-        newSlideElement.style.pointerEvents = 'auto'; // Enable interaction
-        newSlideElement.style.opacity = '0'; // Start transparent
+        console.log('[goToSlide] Preparing new slide for entry...');
+        newSlideElement.style.display = 'flex'; // Torná-lo visível no layout
+        newSlideElement.style.visibility = 'visible'; // Torná-lo visível
+        newSlideElement.style.pointerEvents = 'auto'; // Ativar interação
+        newSlideElement.style.opacity = '0'; // Começar transparente
 
-        // Set initial off-screen position for the incoming slide
+        // Definir a posição inicial fora do ecrã para o slide que entra
         if (direction === 'next') {
-            newSlideElement.style.transform = 'translateX(100%)'; // Comes from right
+            newSlideElement.style.transform = 'translateX(100%)'; // Vem da direita
         } else if (direction === 'prev') {
-            newSlideElement.style.transform = 'translateX(-100%)'; // Comes from left
+            newSlideElement.style.transform = 'translateX(-100%)'; // Vem da esquerda
         } else {
-            // If no specific direction (e.g., direct jump via sidebar), just appear without horizontal slide
+            // Se não houver direção específica (ex: salto direto via barra lateral), apenas aparece sem deslize horizontal
             newSlideElement.style.transform = 'translateX(0)'; 
         }
 
-        // Force a reflow: CRUCIAL. Ensures browser renders initial state
-        // (display:flex, visibility:visible, opacity:0, transform:X%) BEFORE applying final state.
-        // Without this, the transition may not occur as the browser might optimize away the intermediate state.
-        void newSlideElement.offsetWidth; 
-        console.log('Reflow forced for new slide.');
+        // Forçar um reflow: CRUCIAL. Garante que o navegador renderiza o estado inicial
+        // (display:flex, visibility:visible, opacity:0, transform:X%) ANTES de aplicar a classe 'active'.
+        // Sem isto, a transição pode não ocorrer.
+        // Usar setTimeout(0) é uma forma mais robusta de forçar o reflow do que offsetWidth.
+        setTimeout(() => {
+            console.log('[goToSlide] Forcing reflow and animating new slide in...');
+            // Passo 3: Animar o novo slide para dentro
+            // Aplicar os estilos finais que irão acionar a transição CSS
+            newSlideElement.style.opacity = '1';
+            newSlideElement.style.transform = 'translateX(0)'; // Move para o centro
+            newSlideElement.classList.add('active'); // Adicionar a classe 'active' para que permaneça ativo
+        }, 0); // Pequeno atraso para permitir reflow
 
-        // Passo 3: Animar o novo slide para dentro
-        console.log('Animating new slide in...');
-        newSlideElement.style.opacity = '1';
-        newSlideElement.style.transform = 'translateX(0)'; // Move to center
-        newSlideElement.classList.add('active'); // Add active class to keep it active
-
-        // Update internal state and UI elements
+        // Atualizar o estado interno e os elementos da UI
         this.currentSlide = slideNumber;
         this.updateSlideCounter();
         this.updateNavButtons();
         this.updateSidebarActive();
-        this.updateHash(); // Update URL hash
-        console.log(`Successfully moved to slide ${this.currentSlide}`);
+        this.updateHash(); // Atualizar o hash da URL
+        console.log(`[goToSlide] Successfully moved to slide ${this.currentSlide}`);
 
-        // Close mobile sidebar after navigation
+        // Fechar a barra lateral móvel após a navegação
         if (window.innerWidth <= 768) {
             this.closeMobileSidebar();
         }
@@ -521,6 +524,166 @@ class PresentationApp {
             };
         }
         modal.style.display = 'flex'; // Usar flex para centralizar
+    }
+
+    // --- Métodos de Carregamento e Renderização de Gráficos (integrados do seu código original) ---
+    async loadAndRenderCharts() {
+        console.log('[Charts] Loading and rendering charts...');
+        try {
+            // Criar ficheiros CSV virtuais para demonstração
+            // No ambiente real, estes seriam carregados de URLs ou ficheiros
+            const commonErrorsCSV = `Erro,Frequência
+"Vírgula (,)",95
+"Acento Grave (`),80
+"Ponto e Vírgula (;)",70
+"Aspas (""),60
+"Hífen (-)",50
+"Crase (à)",40`;
+
+            const punctuationCSV = `Sinal,Uso
+"Ponto Final (.)",120
+"Vírgula (,)",110
+"Ponto de Interrogação (?)",90
+"Ponto de Exclamação (!)",80
+"Dois Pontos (:)",75
+"Ponto e Vírgula (;)",65
+"Aspas (""),55
+"Parênteses ()",45
+"Travessão (—)",35`;
+
+            const commonErrorsData = this.parseCSV(commonErrorsCSV);
+            console.log('[Charts] Erros Mais Comuns Data Loaded:', commonErrorsData);
+            this.renderCommonErrorsChart(commonErrorsData);
+
+            const punctuationData = this.parseCSV(punctuationCSV);
+            console.log('[Charts] Sinais de Pontuação Data Loaded:', punctuationData);
+            this.renderPunctuationChart(punctuationData);
+
+            console.log('[Charts] All data loaded, rendering charts...');
+        } catch (error) {
+            console.error('[Charts] Error loading chart data:', error);
+        }
+    }
+
+    // Método para simular o carregamento de CSV (usando string em vez de fetch)
+    // No ambiente real, fetchCSV seria usado para carregar de ficheiros externos
+    // async fetchCSV(filename) {
+    //     const response = await fetch(filename);
+    //     const text = await response.text();
+    //     return this.parseCSV(text);
+    // }
+
+    parseCSV(text) {
+        const lines = text.trim().split('\n');
+        const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+        const data = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
+
+            // Expressão regular para dividir por vírgula, mas ignorar vírgulas dentro de aspas
+            const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
+            // Remover aspas duplas dos valores
+            const cleanedValues = values.map(v => v.replace(/"/g, '').trim());
+
+            if (cleanedValues.length !== headers.length) {
+                console.warn(`[parseCSV] Skipping line ${i + 1} due to mismatched column count: "${line}" (Expected ${headers.length}, Got ${cleanedValues.length})`);
+                continue;
+            }
+
+            const row = {};
+            headers.forEach((header, index) => {
+                row[header] = cleanedValues[index];
+            });
+            data.push(row);
+        }
+        return data;
+    }
+
+    renderCommonErrorsChart(data) {
+        const ctx = document.getElementById('commonErrorsChart');
+        if (!ctx) {
+            console.warn('[Charts] Common Errors Chart canvas not found.');
+            return;
+        }
+        // Destruir gráfico existente se houver (para evitar sobreposição em atualizações)
+        if (ctx.chart) {
+            ctx.chart.destroy();
+        }
+        // Assumindo Chart.js é carregado globalmente
+        ctx.chart = new Chart(ctx, { // Armazenar a instância do gráfico no elemento canvas
+            type: 'bar',
+            data: {
+                labels: data.map(row => row['Erro']),
+                datasets: [{
+                    label: 'Frequência',
+                    data: data.map(row => parseInt(row['Frequência'])),
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Permitir que o gráfico se ajuste ao seu container
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    renderPunctuationChart(data) {
+        const ctx = document.getElementById('punctuationChart');
+        if (!ctx) {
+            console.warn('[Charts] Punctuation Chart canvas not found.');
+            return;
+        }
+        // Destruir gráfico existente se houver
+        if (ctx.chart) {
+            ctx.chart.destroy();
+        }
+        // Assumindo Chart.js é carregado globalmente
+        ctx.chart = new Chart(ctx, { // Armazenar a instância do gráfico no elemento canvas
+            type: 'pie',
+            data: {
+                labels: data.map(row => row['Sinal']),
+                datasets: [{
+                    label: 'Uso',
+                    data: data.map(row => parseInt(row['Uso'])),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(199, 199, 199, 0.6)',
+                        'rgba(83, 102, 255, 0.6)',
+                        'rgba(255, 99, 255, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(199, 199, 199, 1)',
+                        'rgba(83, 102, 255, 1)',
+                        'rgba(255, 99, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Permitir que o gráfico se ajuste ao seu container
+            }
+        });
     }
 }
 
