@@ -2,249 +2,203 @@
 <html lang="pt-PT">
 <head>
   <meta charset="utf-8" />
-  <title>SchoolAI — Guia Interativo para Professores</title>
+  <title>SchoolAI — Apresentação Interativa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Reveal.js CDN (abre no browser localmente ou em servidor) -->
+  <!-- Reveal.js e plugins via CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.2/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.2/dist/theme/black.css">
-  <style>
-    /* Ajustes de estilo pessoais */
-    h1, h2, h3 { font-family: "Helvetica Neue", Arial, sans-serif; }
-    .footer { position: absolute; bottom: 10px; left: 0; width: 100%; font-size: 0.5em; text-align: center; color: #aaa; }
-    .highlight { color: #ffd166; font-weight: 700; }
-    .columnas { display: flex; gap: 2rem; }
-    .columnas > div { flex: 1; }
-  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<style>
-body {
-  background: #1a1a2e;
-  color: #fff;
-  font-family: 'Segoe UI', Arial, sans-serif;
-}
-h1, h2, h3 {
-  color: #ffd166;
-  margin-bottom: 0.5em;
-}
-ul, ol {
-  font-size: 1.1em;
-}
-section {
-  padding: 2em 3em;
-  border-radius: 16px;
-  background: rgba(30, 30, 50, 0.85);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.1);
-}
-.highlight {
-  color: #06d6a0;
-  font-weight: bold;
-}
-.footer {
-  font-size: 0.7em;
-  color: #aaa;
-}
-.columnas {
-  display: flex;
-  gap: 2rem;
-}
-.columnas > div {
-  flex: 1;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1em;
-}
-th, td {
-  border: 1px solid #444;
-  padding: 0.6em 1em;
-  text-align: left;
-}
-th {
-  background: #22223b;
-  color: #ffd166;
-}
-</style>
-
 <body>
 <div class="reveal">
-<div class="slides">
+  <div class="slides">
 
-<!-- Slide 1: Título -->
-<section>
-  <h1>SchoolAI</h1>
-  <h3 class="highlight">Transformar a experiência educativa com IA</h3>
-  <p class="footer">Formação para Professores · 4 h · 15 slides</p>
-</section>
+    <!-- Slide 1: Título -->
+    <section>
+      <h1>SchoolAI</h1>
+      <h3 class="highlight">Transformar a experiência educativa com IA</h3>
+      <p class="footer">Formação Interactiva para Professores</p>
+    </section>
 
-<!-- Slide 2: Objectivos da Sessão -->
-<section>
-  <h2>Objectivos da Formação</h2>
-  <ul>
-    <li>Compreender a <strong>visão e estrutura</strong> do SchoolAI</li>
-    <li>Explorar as <strong>funcionalidades-chave</strong></li>
-    <li>Criar o <strong>primeiro Espaço Estudantil</strong></li>
-    <li>Planear a <strong>implementação faseada</strong> na escola</li>
-  </ul>
-</section>
+    <!-- Slide 2: Objectivos -->
+    <section>
+      <h2>Objectivos da Formação</h2>
+      <ul>
+        <li>Compreender a <strong>visão e estrutura</strong> do SchoolAI</li>
+        <li>Explorar as <strong>funcionalidades-chave</strong></li>
+        <li>Criar o <strong>primeiro Espaço Estudantil</strong></li>
+        <li>Planear a <strong>implementação faseada</strong> na escola</li>
+      </ul>
+    </section>
 
-<!-- Slide 3: Enquete Inicial (exemplo de interactividade) -->
-<section data-auto-animate>
-  <h2>📊 Enquete Rápida</h2>
-  <p>Qual o maior desafio actual na sua sala de aula?</p>
-  <ol>
-    <li>Gestão de tempo</li>
-    <li>Diferenciação</li>
-    <li>Engajamento dos alunos</li>
-    <li>Avaliação e feedback</li>
-  </ol>
-  <p style="font-size:0.7em;">(Use Mentimeter, Slido, etc. para recolher respostas ao vivo)</p>
-</section>
+    <!-- Slide 3: Enquete -->
+    <section>
+      <h2>📊 Enquete Rápida</h2>
+      <p>Qual o maior desafio actual na sua sala de aula?</p>
+      <ol>
+        <li>Gestão de tempo</li>
+        <li>Diferenciação</li>
+        <li>Engajamento dos alunos</li>
+        <li>Avaliação e feedback</li>
+      </ol>
+      <button id="quiz-btn">Responder Quiz</button>
+      <p style="font-size:0.7em;">(Use Mentimeter, Slido, etc. para recolher respostas ao vivo)</p>
+    </section>
 
-<!-- Slide 4: O que é o SchoolAI -->
-<section>
-  <h2>O que é o <span class="highlight">SchoolAI</span>?</h2>
-  <p>Plataforma web inteligente que cria <em>experiências personalizadas</em>, oferece <em>insights em tempo real</em> e integra-se com o ecossistema escolar.</p>
-  <div class="columnas">
-    <div>
-      <h3>Para Professores</h3>
-      <ul><li>Planos de aula em segundos</li><li>Monitorização detalhada</li></ul>
-    </div>
-    <div>
-      <h3>Para Alunos</h3>
-      <ul><li>Tutoria 24/7</li><li>Aprendizagem imersiva</li></ul>
-    </div>
+    <!-- Slide 4: O que é o SchoolAI -->
+    <section>
+      <h2>O que é o <span class="highlight">SchoolAI</span>?</h2>
+      <p>Plataforma web inteligente que cria <em>experiências personalizadas</em>, oferece <em>insights em tempo real</em> e integra-se com o ecossistema escolar.</p>
+      <div class="columnas">
+        <div>
+          <h3>Para Professores</h3>
+          <ul><li>Planos de aula em segundos</li><li>Monitorização detalhada</li></ul>
+        </div>
+        <div>
+          <h3>Para Alunos</h3>
+          <ul><li>Tutoria 24/7</li><li>Aprendizagem imersiva</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Arquitectura -->
+    <section>
+      <h2>Arquitectura em 3 Camadas</h2>
+      <ol>
+        <li><strong>Espaços Estudantis</strong> (chatbots, jogos, debates)</li>
+        <li><strong>Mission Control</strong> (insights e alertas)</li>
+        <li><strong>Ferramentas de Criação</strong> (planos, actividades, extensão Chrome)</li>
+      </ol>
+    </section>
+
+    <!-- Slide 6: Demonstração -->
+    <section>
+      <h2>🔴 Demonstração ao vivo</h2>
+      <p>Abrir <code>app.schoolai.com</code>, iniciar sessão e mostrar:</p>
+      <ul>
+        <li>Biblioteca “Discover”</li>
+        <li>Criar novo Espaço (tutor de português)</li>
+        <li>Visão do aluno e monitorização em tempo real</li>
+      </ul>
+    </section>
+
+    <!-- Slide 7: Benefícios Professores -->
+    <section>
+      <h2>Benefícios para Professores</h2>
+      <ul>
+        <li>Redução média de <strong>3&nbsp;h/semana</strong> em tarefas administrativas</li>
+        <li>Feedback instantâneo e relatórios automáticos</li>
+        <li>Diferenciação com poucos cliques</li>
+      </ul>
+    </section>
+
+    <!-- Slide 8: Benefícios Alunos -->
+    <section>
+      <h2>Benefícios para Alunos</h2>
+      <ul>
+        <li>Apoio personalizado 24/7</li>
+        <li>Gamificação e curiosidade</li>
+        <li>Ambiente seguro para perguntas</li>
+      </ul>
+    </section>
+
+    <!-- Slide 9: Laboratório -->
+    <section>
+      <h2>Laboratório: Criar um Espaço</h2>
+      <ol>
+        <li>Definir objectivo (ex.: revisão gramatical)</li>
+        <li>Escrever prompt claro</li>
+        <li>Testar como aluno</li>
+        <li>Partilhar link ou QR code</li>
+      </ol>
+      <p class="footer">Tempo estimado: 25 min</p>
+    </section>
+
+    <!-- Slide 10: Casos de Uso -->
+    <section>
+      <h2>Casos de Uso Reais</h2>
+      <ul>
+        <li><strong>IA Educação 360º</strong> (Elvas &amp; Oeiras) – Melhoria na escrita</li>
+        <li><strong>Toler Elementary (EUA)</strong> – Apoio a alunos com necessidades</li>
+        <li><strong>Video Explorer</strong> – Integração YouTube + IA</li>
+      </ul>
+    </section>
+
+    <!-- Slide 11: Segurança -->
+    <section>
+      <h2>Segurança e Conformidade</h2>
+      <ul>
+        <li>Compatível com GDPR, FERPA, COPPA</li>
+        <li>Dados não são usados para treinar modelos</li>
+        <li>Máscara e anonimização de dados de alunos</li>
+      </ul>
+    </section>
+
+    <!-- Slide 12: Planos -->
+    <section>
+      <h2>Planos Disponíveis</h2>
+      <table>
+        <tr><th>Plano</th><th>Destaques</th><th>Preço</th></tr>
+        <tr><td>Gratuito</td><td>75 sessões/dia, ferramentas base</td><td>0 €</td></tr>
+        <tr><td>Equipa</td><td>10 licenças, 175 alunos</td><td>≈ 1 270 US$/ano</td></tr>
+        <tr><td>Empresarial</td><td>Ilimitado, SSO, suporte dedicado</td><td>sob consulta</td></tr>
+      </table>
+    </section>
+
+    <!-- Slide 13: Boas Práticas -->
+    <section>
+      <h2>Boas Práticas</h2>
+      <ul>
+        <li>Prompts específicos e objectivos claros</li>
+        <li>Monitorizar Mission Control semanalmente</li>
+        <li>Avaliar resultados e ajustar Espaços</li>
+      </ul>
+    </section>
+
+    <!-- Slide 14: Roadmap -->
+    <section>
+      <h2>Roadmap de Implementação</h2>
+      <ol>
+        <li><strong>Fase 1</strong> – Exploração individual</li>
+        <li><strong>Fase 2</strong> – Piloto com uma turma</li>
+        <li><strong>Fase 3</strong> – Expansão para outras disciplinas</li>
+        <li><strong>Fase 4</strong> – Integração curricular completa</li>
+      </ol>
+    </section>
+
+    <!-- Slide 15: Encerramento -->
+    <section>
+      <h2>Próximos Passos</h2>
+      <ul>
+        <li>Registe-se em <strong>schoolai.com</strong></li>
+        <li>Explore a biblioteca “Discover”</li>
+        <li>Participe na comunidade de educadores</li>
+        <li>Agende sessão de apoio personalizada</li>
+      </ul>
+      <p class="highlight">🌟 Obrigado e boas aulas!</p>
+    </section>
+
   </div>
-</section>
-
-<!-- Slide 5: Arquitectura Geral -->
-<section>
-  <h2>Arquitectura em 3 Camadas</h2>
-  <ol>
-    <li><strong>Espaços Estudantis</strong> (chatbots, jogos, debates)</li>
-    <li><strong>Mission Control</strong> (insights e alertas)</li>
-    <li><strong>Ferramentas de Criação</strong> (planos, actividades, extensão Chrome)</li>
-  </ol>
-</section>
-
-<!-- Slide 6: Demonstração ao Vivo -->
-<section>
-  <h2>🔴 Demonstração ao vivo</h2>
-  <p>Abrir <code>app.schoolai.com</code>, iniciar sessão e mostrar:</p>
-  <ul>
-    <li>Biblioteca “Discover”</li>
-    <li>Criar novo Espaço (tutor de português)</li>
-    <li>Visão do aluno e monitorização em tempo real</li>
-  </ul>
-</section>
-
-<!-- Slide 7: Benefícios para Professores -->
-<section>
-  <h2>Benefícios para Professores</h2>
-  <ul>
-    <li>Redução média de <strong>3&nbsp;h/semana</strong> em tarefas administrativas</li>
-    <li>Feedback instantâneo e relatórios automáticos</li>
-    <li>Diferenciação com poucos cliques</li>
-  </ul>
-</section>
-
-<!-- Slide 8: Benefícios para Alunos -->
-<section>
-  <h2>Benefícios para Alunos</h2>
-  <ul>
-    <li>Apoio personalizado 24/7</li>
-    <li>Gamificação e curiosidade</li>
-    <li>Ambiente seguro para perguntas</li>
-  </ul>
-</section>
-
-<!-- Slide 9: Laboratório Hands-On -->
-<section>
-  <h2>Laboratório: Criar um Espaço</h2>
-  <ol>
-    <li>Definir objectivo (ex.: revisão gramatical)</li>
-    <li>Escrever prompt claro</li>
-    <li>Testar como aluno</li>
-    <li>Partilhar link ou QR code</li>
-  </ol>
-  <p class="footer">Tempo estimado: 25 min</p>
-</section>
-
-<!-- Slide 10: Casos de Sucesso -->
-<section>
-  <h2>Casos de Uso Reais</h2>
-  <ul>
-    <li><strong>IA Educação 360º</strong> (Elvas &amp; Oeiras) – Melhoria na escrita</li>
-    <li><strong>Toler Elementary (EUA)</strong> – Apoio a alunos com necessidades</li>
-    <li><strong>Video Explorer</strong> – Integração YouTube + IA</li>
-  </ul>
-</section>
-
-<!-- Slide 11: Segurança & Privacidade -->
-<section>
-  <h2>Segurança e Conformidade</h2>
-  <ul>
-    <li>Compatível com GDPR, FERPA, COPPA</li>
-    <li>Dados não são usados para treinar modelos</li>
-    <li>Máscara e anonimização de dados de alunos</li>
-  </ul>
-</section>
-
-<!-- Slide 12: Planos e Preços -->
-<section>
-  <h2>Planos Disponíveis</h2>
-  <table>
-    <tr><th>Plano</th><th>Destaques</th><th>Preço</th></tr>
-    <tr><td>Gratuito</td><td>75 sessões/dia, ferramentas base</td><td>0 €</td></tr>
-    <tr><td>Equipa</td><td>10 licenças, 175 alunos</td><td>≈ 1 270 US$/ano</td></tr>
-    <tr><td>Empresarial</td><td>Ilimitado, SSO, suporte dedicado</td><td>sob consulta</td></tr>
-  </table>
-</section>
-
-<!-- Slide 13: Melhores Práticas -->
-<section>
-  <h2>Boas Práticas</h2>
-  <ul>
-    <li>Prompts específicos e objectivos claros</li>
-    <li>Monitorizar Mission Control semanalmente</li>
-    <li>Avaliar resultados e ajustar Espaços</li>
-  </ul>
-</section>
-
-<!-- Slide 14: Implementação Faseada -->
-<section>
-  <h2>Roadmap de Implementação</h2>
-  <ol>
-    <li><strong>Fase 1</strong> – Exploração individual</li>
-    <li><strong>Fase 2</strong> – Piloto com uma turma</li>
-    <li><strong>Fase 3</strong> – Expansão para outras disciplinas</li>
-    <li><strong>Fase 4</strong> – Integração curricular completa</li>
-  </ol>
-</section>
-
-<!-- Slide 15: Encerramento e Próximos Passos -->
-<section>
-  <h2>Próximos Passos</h2>
-  <ul>
-    <li>Registe-se em <strong>schoolai.com</strong></li>
-    <li>Explore a biblioteca “Discover”</li>
-    <li>Participe na comunidade de educadores</li>
-    <li>Agende sessão de apoio personalizada</li>
-  </ul>
-  <p class="highlight">🌟 Obrigado e boas aulas!</p>
-</section>
-
-</div>
 </div>
 
-<!-- Scripts Reveal.js -->
+<!-- Reveal.js e plugins -->
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.2/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
 <script>
   Reveal.initialize({
     hash: true,
     slideNumber: 'c/t',
-    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    plugins: [ RevealMenu ],
+    menu: {
+      side: 'left',
+      numbers: true,
+      titleSelector: 'h1, h2, h3',
+      useTextContentForMissingTitles: true
+    }
   });
 </script>
+<script src="app.js"></script>
 </body>
 </html>
