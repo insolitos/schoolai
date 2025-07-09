@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SchoolAI - Formação para Professores</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Chart.js CDN para renderização de gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="presentation-container">
@@ -33,6 +35,7 @@
                     <li><a href="#slide-13" data-slide="13">13. Primeiros Passos</a></li>
                     <li><a href="#slide-14" data-slide="14">14. Boas Práticas</a></li>
                     <li><a href="#slide-15" data-slide="15">15. Futuro da IA na Educação</a></li>
+                    <li><a href="#slide-16" data-slide="16">16. Dados e Estatísticas</a></li> <!-- Novo slide para gráficos -->
                 </ul>
             </nav>
         </aside>
@@ -48,7 +51,7 @@
                 <button class="btn btn--sm" id="fullscreenToggle">Ecrã Completo</button>
                 <button class="btn btn--sm" id="showShortcuts">Atalhos</button>
                 <div class="slide-counter">
-                    <span id="currentSlide">1</span> / <span id="totalSlides">15</span>
+                    <span id="currentSlide">1</span> / <span id="totalSlides">16</span> <!-- Total de slides atualizado -->
                 </div>
                 <div class="presentation-timer">
                     Tempo: <span id="timer">0:00</span>
@@ -575,6 +578,31 @@
                             <li>Discutir roadmap futuro do SchoolAI</li>
                             <li>Encorajar participação na comunidade</li>
                             <li>Fornecer recursos de apoio contínuo</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Slide 16: Dados e Estatísticas (Novo Slide para Gráficos) -->
+                <div class="slide" data-slide="16">
+                    <div class="slide-content">
+                        <h1 class="slide-title">Dados e Estatísticas</h1>
+                        <div class="slide-body">
+                            <div class="chart-container">
+                                <h2>Erros Mais Comuns</h2>
+                                <canvas id="commonErrorsChart"></canvas>
+                            </div>
+                            <div class="chart-container mt-8">
+                                <h2>Uso de Sinais de Pontuação</h2>
+                                <canvas id="punctuationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trainer-notes">
+                        <h4>Notas do Formador:</h4>
+                        <ul>
+                            <li>Analisar os dados de erros comuns e uso de pontuação.</li>
+                            <li>Discutir como estes dados podem informar a instrução.</li>
+                            <li>Enfatizar a importância da análise de dados para a personalização.</li>
                         </ul>
                     </div>
                 </div>
